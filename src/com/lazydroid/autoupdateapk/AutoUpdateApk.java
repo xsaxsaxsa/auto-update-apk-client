@@ -209,7 +209,7 @@ public class AutoUpdateApk extends Observable {
 		public void onReceive(Context context, Intent intent) {
 			NetworkInfo currentNetworkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
 
-			// do application-specific task(s) based on the current network state, such 
+			// do application-specific task(s) based on the current network state, such
 			// as enabling queuing of HTTP requests when currentNetworkInfo is connected etc.
 			boolean not_mobile = currentNetworkInfo.getTypeName().equalsIgnoreCase("MOBILE") ? false : true;
 			if( currentNetworkInfo.isConnected() && (mobile_updates || not_mobile) ) {
@@ -280,7 +280,7 @@ public class AutoUpdateApk extends Observable {
 
 			HttpParams httpParameters = new BasicHttpParams();
 			// set the timeout in milliseconds until a connection is established
-			// the default value is zero, that means the timeout is not used 
+			// the default value is zero, that means the timeout is not used
 			int timeoutConnection = 3000;
 			HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
 			// set the default socket timeout (SO_TIMEOUT) in milliseconds
@@ -321,13 +321,16 @@ public class AutoUpdateApk extends Observable {
 				return result;
 			} catch (ParseException e) {
 //				e.printStackTrace();
-				Log_e(TAG, e.getMessage());
+				final String msg = e.getMessage();
+				Log_e(TAG, msg != null ? msg : "Parse Exception");
 			} catch (ClientProtocolException e) {
 //				e.printStackTrace();
-				Log_e(TAG, e.getMessage());
+				final String msg = e.getMessage();
+				Log_e(TAG, msg != null ? msg : "Client Protocol Exception");
 			} catch (IOException e) {
 //				e.printStackTrace();
-				Log_e(TAG, e.getMessage());
+				final String msg = e.getMessage();
+				Log_e(TAG, msg != null ? msg : "IO Exception");
 			} finally {
 				httpclient.getConnectionManager().shutdown();
 				long elapsed = System.currentTimeMillis() - start;
